@@ -1,0 +1,33 @@
+<div class="desk" [style.left.px]="desk.x" [style.top.px]="desk.y" [style.backgroundColor]="getBackgroundColor()" (mousedown)="onMouseDown($event)" (contextmenu)="onContextMenu($event)" (mouseenter)="onMouseEnter($event)" (mouseleave)="onMouseLeave()">
+    {{ desk.name }}
+    {{ desk.user?.name }}
+
+    @if (showContextMenu) {
+        <div class="context-menu" [style.top.px]="contextMenuY" [style.left.px]="contextMenuX">
+            <div class="context-menu-item" (click)="onStateChange('available')">
+                在席
+            </div>
+            <div class="context-menu-item" (click)="onStateChange('occupied')">
+                占有
+            </div>
+            <div class="context-menu-item" (click)="onStateChange(null)">
+                クリア
+            </div>
+        </div>
+    }
+
+    @if (showTooltip && desk.user) {
+        <div class="my-tooltip" [style.left.px]="tooltipX" [style.top.px]="tooltipY">
+            <div class="my-tooltip-row">
+                <span class="my-tooltip-label">状態:</span>
+                <span class="my-tooltip-value">{{ desk.user.state }}</span>
+            </div>
+            @if (desk.user.comment) {
+                <div class="my-tooltip-row">
+                    <span class="my-tooltip-label">コメント:</span>
+                    <span class="my-tooltip-value">{{ desk.user.comment }}</span>
+                </div>
+            }
+        </div>
+    }
+</div>

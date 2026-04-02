@@ -1,0 +1,5 @@
+<div class="map-area">
+    @for (desk of desks; track desk.id) {
+        <app-desk [desk]="desk" (positionChanged)="onDeskPositionChanged($event)" (stateSelected)="onDeskStateSelected($event)"></app-desk>
+    }
+</div>

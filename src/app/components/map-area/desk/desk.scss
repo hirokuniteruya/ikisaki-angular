@@ -1,0 +1,90 @@
+.desk {
+    position: absolute;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+    transition: box-shadow 0.2s ease;
+
+    &:active {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: #e8e8e8;
+    }
+}
+
+.context-menu {
+    position: fixed;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.context-menu-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #f0f0f0;
+    }
+
+    &:first-child {
+        border-radius: 4px 4px 0 0;
+    }
+
+    &:last-child {
+        border-radius: 0 0 4px 4px;
+    }
+}
+
+.my-tooltip {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 999;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid rgba(0, 0, 0, 0.8);
+    }
+}
+
+.my-tooltip-row {
+    display: flex;
+    gap: 8px;
+    line-height: 1.4;
+
+    &:not(:last-child) {
+        margin-bottom: 4px;
+    }
+}
+
+.my-tooltip-label {
+    font-weight: bold;
+}
+
+.my-tooltip-value {
+    color: #e8e8e8;
+}

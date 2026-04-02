@@ -1,0 +1,28 @@
+@if (isOpen) {
+<div class="my-modal-overlay" (click)="onOverlayClick()">
+    <div class="my-modal" (click)="$event.stopPropagation()">
+        <div class="my-modal-header">
+            {{ deskName }} - ステータス更新
+        </div>
+        <div class="my-modal-body">
+            有効期限
+            <div class="row">
+                <div class="col">
+                    <label for="expiryDate">日付：</label>
+                    <input type="date" id="expiryDate" class="my-modal-input" [(ngModel)]="expiryDate" />
+                </div>
+                <div class="col">
+                    <label for="expiryTime">時刻：</label>
+                    <input type="time" id="expiryTime" class="my-modal-input" [(ngModel)]="expiryTime" />
+                </div>
+            </div>
+            <label for="comment">コメント：</label>
+            <textarea id="comment" class="my-modal-textarea" [(ngModel)]="comment" placeholder="任意でコメントを入力"></textarea>
+        </div>
+        <div class="my-modal-footer">
+            <button class="my-modal-button my-modal-button-cancel" (click)="onCancel()">キャンセル</button>
+            <button class="my-modal-button my-modal-button-save" (click)="onSave()">保存</button>
+        </div>
+    </div>
+</div>
+}
