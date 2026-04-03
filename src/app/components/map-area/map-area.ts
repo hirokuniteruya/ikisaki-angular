@@ -1,9 +1,11 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { Desk } from "./desk/desk";
+import { DeskComponent } from "./desk/desk";
+import { Desk as DeskType } from "../../types/Desk";
+import { User } from '../../types/User';
 
 @Component({
   selector: 'app-map-area',
-  imports: [Desk],
+  imports: [DeskComponent],
   templateUrl: './map-area.html',
   styleUrl: './map-area.scss',
 })
@@ -25,9 +27,9 @@ export class MapArea {
     ]
   };
 
-  desks: { id: number; name: string; x: number; y: number; z: number, user?: { id: number; name: string; state: string; comment: string; } }[] = [];
+  desks: DeskType[] = [];
 
-  users: { id: number; name: string; deskId: number; state: string; comment: string }[] = [];
+  users: User[] = [];
 
   ngOnInit() {
     // デスクとユーザーの初期化などのロジックをここに追加できます
@@ -61,9 +63,7 @@ export class MapArea {
     const desk = this.desks.find(d => d.id === deskId);
     if (!desk) return;
 
-    if (!desk.user) {
-      desk.user = { id: 0, name: 'Unknown', state: '', comment: '' };
-    }
+    if (!desk.user) return;
 
     if (state === null) {
       // stateのみをクリア

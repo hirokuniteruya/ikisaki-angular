@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Desk as DeskType } from "../../../types/Desk";
 
 @Component({
   selector: 'app-desk',
@@ -6,8 +7,8 @@ import { Component, Input, Output, EventEmitter, ChangeDetectorRef, HostListener
   templateUrl: './desk.html',
   styleUrl: './desk.scss',
 })
-export class Desk {
-  @Input() desk!: { id: number; name: string; x: number; y: number; z: number; user?: { id: number; name: string; state: string; comment?: string; }; };
+export class DeskComponent {
+  @Input() desk!: DeskType;
   @Output() positionChanged = new EventEmitter<{ id: number; x: number; y: number }>();
   @Output() stateSelected = new EventEmitter<{ deskId: number; deskName: string; state: string | null }>();
 

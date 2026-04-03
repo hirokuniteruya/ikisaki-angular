@@ -3,12 +3,10 @@ import { RouterOutlet } from '@angular/router';
 import { Navbar } from "./components/navbar/navbar";
 import { MapArea } from "./components/map-area/map-area";
 import { StatusUpdateModal } from "./components/status-update-modal/status-update-modal";
-// import { StateUpdateModal } from './components/state-update-modal/state-update-modal';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Navbar, MapArea, StatusUpdateModal],
-  // imports: [RouterOutlet, Navbar, MapArea, StatusUpdateModal, StateUpdateModal],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
