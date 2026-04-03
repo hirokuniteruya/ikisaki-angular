@@ -1,16 +1,17 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectorRef, HostListener } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { Desk as DeskType } from "../../../types/Desk";
 
 @Component({
   selector: 'app-desk',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './desk.html',
   styleUrl: './desk.scss',
 })
 export class DeskComponent {
   @Input() desk!: DeskType;
   @Output() positionChanged = new EventEmitter<{ id: number; x: number; y: number }>();
-  @Output() stateSelected = new EventEmitter<{ deskId: number; deskName: string; state: string | null }>();
+  @Output() stateSelected = new EventEmitter<{ deskId: number; deskName: string; state: string }>();
 
   private isDragging = false;
   private dragStartX = 0;
@@ -85,7 +86,7 @@ export class DeskComponent {
     this.showContextMenu = true;
   }
 
-  onStateChange(state: string | null): void {
+  onStateSelected(state: string): void {
     this.stateSelected.emit({
       deskId: this.desk.id,
       deskName: this.desk.name,

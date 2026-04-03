@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { DeskComponent } from "./desk/desk";
 import { Desk as DeskType } from "../../types/Desk";
 import { User } from '../../types/User';
+import { db } from '../../temporary-db/temporary-db';
 
 @Component({
   selector: 'app-map-area',
@@ -10,22 +11,7 @@ import { User } from '../../types/User';
   styleUrl: './map-area.scss',
 })
 export class MapArea {
-  @Output() stateSelected = new EventEmitter<{ deskId: number; deskName: string; state: string | null }>();
-
-  // 仮のデータベース
-  db = {
-    desks: [
-      { id: 1, name: 'Desk 1', x: 100, y: 100, z: 0 },
-      { id: 2, name: 'Desk 2', x: 200, y: 100, z: 0 },
-      { id: 3, name: 'Desk 3', x: 100, y: 200, z: 0 },
-      { id: 4, name: 'Desk 4', x: 200, y: 200, z: 0 },
-    ],
-    users: [
-      { id: 1, name: 'User 1', deskId: 1, state: 'available', comment: 'I am available!' },
-      { id: 2, name: 'User 2', deskId: 2, state: 'occupied', comment: 'I am occupied!' },
-      { id: 3, name: 'User 3', deskId: 3, state: 'occupied', comment: 'I am occupied!' },
-    ]
-  };
+  @Output() stateSelected = new EventEmitter<{ deskId: number; deskName: string; state: string }>();
 
   desks: DeskType[] = [];
 
@@ -33,8 +19,8 @@ export class MapArea {
 
   ngOnInit() {
     // デスクとユーザーの初期化などのロジックをここに追加できます
-    this.desks = this.db.desks;
-    this.users = this.db.users;
+    this.desks = db.desks;
+    this.users = db.users;
 
     // 各デスクにユーザーを割り当て
     this.desks.forEach(desk => {
@@ -55,24 +41,29 @@ export class MapArea {
     }
   }
 
-  onDeskStateSelected(event: { deskId: number; deskName: string; state: string | null }): void {
-    this.stateSelected.emit(event);
+  onDeskStateSelected(event: { deskId: number; deskName: string; state: string }): void {
+    if (event.state === '' || event.state === 'available') {
+      this.saveState(event.deskId, event.state, '', null);
+    } else {
+      this.stateSelected.emit(event);
+    }
   }
 
-  saveStateWithComment(deskId: number, state: string | null, comment: string): void {
+  saveState(deskId: number, state: string, comment: string, expiry: Date | null): void {
     const desk = this.desks.find(d => d.id === deskId);
     if (!desk) return;
-
     if (!desk.user) return;
-
-    if (state === null) {
-      // stateのみをクリア
-      desk.user.state = '';
+    
+    if (state === '' || state === 'available') {
+      desk.user.state = state;
       desk.user.comment = '';
+      desk.user.expiry = null;
+      console.log(`Desk ${deskId} state updated to "${state}"`);
     } else {
-      // stateとコメントを保存
       desk.user.state = state;
       desk.user.comment = comment;
+      desk.user.expiry = expiry ?? null;
+      console.log(`Desk ${deskId} state updated to "${state}" with comment: "${comment}" and expiry: ${expiry}`);
     }
 
     // TODO: ここでバックエンド/データベースに保存

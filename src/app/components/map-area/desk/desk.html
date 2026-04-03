@@ -4,13 +4,13 @@
 
     @if (showContextMenu) {
         <div class="context-menu" [style.top.px]="contextMenuY" [style.left.px]="contextMenuX">
-            <div class="context-menu-item" (click)="onStateChange('available')">
+            <div class="context-menu-item" (click)="onStateSelected('available')">
                 在席
             </div>
-            <div class="context-menu-item" (click)="onStateChange('occupied')">
+            <div class="context-menu-item" (click)="onStateSelected('occupied')">
                 占有
             </div>
-            <div class="context-menu-item" (click)="onStateChange(null)">
+            <div class="context-menu-item" (click)="onStateSelected('')">
                 クリア
             </div>
         </div>
@@ -26,6 +26,12 @@
                 <div class="my-tooltip-row">
                     <span class="my-tooltip-label">コメント:</span>
                     <span class="my-tooltip-value">{{ desk.user.comment }}</span>
+                </div>
+            }
+            @if (desk.user.expiry) {
+                <div class="my-tooltip-row">
+                    <span class="my-tooltip-label">有効期限:</span>
+                    <span class="my-tooltip-value">{{ desk.user.expiry | date:'yyyy/MM/dd HH:mm' }}</span>
                 </div>
             }
         </div>

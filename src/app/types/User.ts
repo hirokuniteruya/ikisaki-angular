@@ -4,4 +4,5 @@ export type User = {
   deskId: number;
   state: string;
   comment?: string;
+  expiry?: Date | null;
 };

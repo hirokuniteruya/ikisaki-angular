@@ -18,17 +18,17 @@ export class App {
   showStatusModal = false;
   selectedDeskId = 0;
   selectedDeskName = '';
-  selectedState: string | null = null;
+  selectedState: string = '';
 
-  onDeskStateSelected(event: { deskId: number; deskName: string; state: string | null }): void {
+  onDeskStateSelected(event: { deskId: number; deskName: string; state: string }): void {
     this.selectedDeskId = event.deskId;
     this.selectedDeskName = event.deskName;
     this.selectedState = event.state;
     this.showStatusModal = true;
   }
 
-  onStatusModalSave(event: { state: string | null; comment: string }): void {
-    this.mapAreaComponent.saveStateWithComment(this.selectedDeskId, event.state, event.comment);
+  onStatusModalSave(event: { state: string; comment: string; expiry: Date | null }): void {
+    this.mapAreaComponent.saveState(this.selectedDeskId, event.state, event.comment, event.expiry);
     this.showStatusModal = false;
   }
 

@@ -10,8 +10,8 @@ import { FormsModule } from '@angular/forms';
 export class StatusUpdateModal {
   @Input() isOpen = false;
   @Input() deskName = '';
-  @Input() selectedState: string | null = null;
-  @Output() save = new EventEmitter<{ state: string | null; comment: string }>();
+  @Input() selectedState: string = '';
+  @Output() save = new EventEmitter<{ state: string; comment: string; expiry: Date | null }>();
   @Output() cancel = new EventEmitter<void>();
 
   expiryDate = '';
@@ -22,6 +22,7 @@ export class StatusUpdateModal {
     this.save.emit({
       state: this.selectedState,
       comment: this.comment,
+      expiry: this.selectedState === 'occupied' ? new Date(`${this.expiryDate}T${this.expiryTime}`) : null,
     });
     this.resetModal();
   }
